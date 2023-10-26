@@ -45,15 +45,39 @@ public class GhostCam : MonoBehaviour
         {
             cam.transform.position += cam.transform.TransformDirection(Vector3.right) * camSpeed * Time.deltaTime;
         }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            cam.transform.position += Vector3.up * camSpeed * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.LeftControl))
+        {
+            cam.transform.position += Vector3.down * camSpeed * Time.deltaTime;
+        }
     }
     private void rotating()
     {
+        if (Input.GetKey(KeyCode.Mouse1) == false) // 마우스오른쪽 버튼 입력 없을 시 통제, 입력되면 아래 기능이 동작됨
+        {
+            return;
+        }
+
         float mouseX = Input.GetAxisRaw("Mouse X") * mouseSens * Time.deltaTime;
         float mouseY = Input.GetAxisRaw("Mouse Y") * mouseSens * Time.deltaTime;
 
         rotateValue.x += mouseY * -1;
         rotateValue.y += mouseX;
 
-        cam.transform.rotation = Quaternion.Euler(rotateValue.x, rotateValue.y, 0f);//(rotateValue) 과 동일
+        //if (rotateValue.x > 90)
+        //{
+        //    rotateValue.x = 90;
+        //}
+        //else if (rotateValue.x < -90)
+        //{
+        //    rotateValue.x = -90;
+        //}
+        rotateValue.x = Mathf.Clamp(rotateValue.x, -90, 90); // 위 if문과 동일한 방법
+
+        cam.transform.rotation = Quaternion.Euler(rotateValue.x, rotateValue.y, 0f);//Quaternion.Euler(rotateValue) 과 동일
     }
 }
