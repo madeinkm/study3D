@@ -21,13 +21,13 @@ public class Player : MonoBehaviour
     private Vector3 rotValue = Vector3.zero;
     private Camera camMain;
 
-    private Transform eye;
+    private GameObject eye;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         caps = GetComponent<CapsuleCollider>();
-        eye = GameObject.Find("Eye").transform;
+        eye = transform.GetChild(0).gameObject;
 
     }
 
@@ -120,16 +120,17 @@ public class Player : MonoBehaviour
         rotValue.y += mouseX;
 
         rotValue.x = Mathf.Clamp(rotValue.x, -45, 45);
-
-        transform.rotation = Quaternion.Euler(0, rotValue.y, 0);
+        transform.rotation = Quaternion.Euler(0, rotValue.y, 0);//ÁÂ¿ì ¿òÁ÷ÀÓ       
         //camMain.transform.rotation = Quaternion.Euler(rotValue);
 
-        if (mouseY > 0)
+
+        if (Input.GetMouseButton(1) && mouseY > 0)
         {
-            camMain.transform.RotateAround(eye.transform.position, Vector3.zero, mouseSens * Time.deltaTime);
+            camMain.transform.RotateAround(eye.transform.position, Vector3.left, mouseSens * Time.deltaTime);
         }
-        
-
-
+        else if (Input.GetMouseButton(1) && mouseY < 0)
+        {
+            camMain.transform.RotateAround(eye.transform.position, Vector3.right, mouseSens * Time.deltaTime);
+        }
     }
 }
