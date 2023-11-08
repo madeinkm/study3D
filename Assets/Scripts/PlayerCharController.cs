@@ -8,13 +8,14 @@ public class PlayerCharController : MonoBehaviour
     private CharacterController cCon;
     private Camera maincam;
 
+    [SerializeField] private GameObject _3rdCam;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 5f;
     private Vector3 moveDir = Vector3.zero;
     private Vector3 rotateValue = Vector3.zero;
     private Vector3 slopeVelocity = Vector3.zero; // 어떤각도로 밀려날지 변수
     private float gravity = 9.81f;
-    private float mouseSense = 100f;
+    //private float mouseSense = 100f;
     private float ver_Velocity = 0f;
     [SerializeField]private bool isGround = false;
     private bool isJump = false;
@@ -51,7 +52,7 @@ public class PlayerCharController : MonoBehaviour
         checkSlope();
 
         functionMouseLock();
-
+        checkZoomView();
 
     }
     private void checkGround()
@@ -151,6 +152,17 @@ public class PlayerCharController : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.Locked;
             }
+        }
+    }
+    private void checkZoomView()
+    {
+        if (Input.GetMouseButton(1) && _3rdCam.activeSelf == true) // _3rdCam.activeSelf => gameObject가 on/off 확인하는 bool 값
+        {
+            _3rdCam.SetActive(false);
+        }
+        else if (Input.GetMouseButton(1) == false && _3rdCam.activeSelf == false)
+        {
+            _3rdCam.SetActive(true);
         }
     }
 }

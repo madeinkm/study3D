@@ -10,9 +10,9 @@ public class Bullet : MonoBehaviour
     private float force = 0;
     private bool gravityCannon = false;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) 
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground")) // 그라운드라는 레이어에 닿으면 삭제
         {
             Destroy(gameObject);
         }
